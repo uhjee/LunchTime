@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+</body>
+<script>
+    function getLocation() {
+        // GPS에 대한 정보는  window.navigator 객체 안에 있다.
+        if(navigator.geolocation){  // GPS를 지원한다면
+            navigator.geolocation.getCurrentPosition(function (position) {
+                console.log(position);
+                alert(`${position.coords.latitude}  ${position.coords.longitude}`);
+            }, function (error) {
+                console.error(error);
+            }, 
+            // options 
+            {
+                enableHighAccuracy: false,
+                maximumAge: 0,
+                timeout: Infinity
+            });
+        } else {
+            alert("GPS를 지원하지 않습니다.")
+        }
+    }
+
+    getLocation();
+</script>
+
+</html>
