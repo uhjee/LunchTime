@@ -24,6 +24,7 @@
             Legion.prototype.attack = function (target) {
                 console.log(`${this.leader}가 ${target.leader}를 공격합니다.`);
             }
+            
             return Legion;
         })();
 
@@ -52,6 +53,7 @@
 
         // 부대 생성
         let galbaLegion = makeLegion('galba').setAdjutant(['otho', 'vindex', 'vitellius']).setArmy(8000).build();
+        
         let rufusLegion = makeLegion('rufus').setArmy(10000).build();
 
         console.log(galbaLegion);
