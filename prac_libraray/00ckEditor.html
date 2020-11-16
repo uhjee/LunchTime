@@ -17,9 +17,16 @@
     </style>
   </head>
   <body>
-    <div id="editor"></div>
+    <div id="content">
+      <p>jeemney</p>
+    </div>
 
     <script>
+      let content = document.querySelector("#content");
+      content.addEventListener("click", function () {
+        content.innerHTML = '<div id="editor">jeemney leb</div>';
+      });
+
       let editor = ClassicEditor.create(
         document.querySelector("#editor"),
         // Configuration -JS Object 형태로

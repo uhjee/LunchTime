@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+  </head>
+  <body>
+    <h1>3</h1>
+    <button onclick="backGranma()">back to the grandma</button>
+
+    <script>
+      function backGranma() {
+        window.opener.opener.welcome();
+        window.opener.close();
+        window.close();
+      }
+    </script>
+  </body>
+</html>

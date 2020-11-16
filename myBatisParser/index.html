@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MyBatis Converter</title>
+
+    <!-- import Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- import CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+      .container {
+        display: flex;
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .text-area {
+        width: 60%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <h2>MyBatis Converter</h2>
+        <el-input
+          type="textarea"
+          placeholder="write SQL with MyBatis!"
+          v-model="originSQLString"
+          class="text-area"
+          rows="10"
+        ></el-input>
+      </div>
+    </div>
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            originSQLString: "",
+          };
+        },
+        watch: {
+          originSQLString: {
+            handler(currentValue) {
+              this.convertSQL(currentValue);
+            },
+          },
+        },
+        methods: {
+          convertSQL(currentValue) {},
+        },
+      });
+    </script>
+  </body>
+</html>
