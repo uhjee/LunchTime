@@ -98,9 +98,12 @@
         },
         methods: {
           convertSQL(currentValue) {
-            const queryList = currentValue.split(";");
+            const originQueryList = currentValue.split(";");
 
-            this.testConsole = queryList;
+            for (originQuery in originQueryList) {
+              let firstStartAngleBracketIndex = originQuery.indexOf("<");
+              console.log(firstStartAngleBracketIndex);
+            }
           },
         },
       });

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@17/umd/react.development.js"
+    ></script>
+
+    <!-- react-dom 실제 Dom에 렌더링해주는 js -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    ></script>
+
+    <!-- 바벨 -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      // <script src="like-button.js">
+      // webpack 은 이런 js 파일을 묶어서 읽어오는 것
+
+      // class 하나가 component 하나라고 생각하자
+      class LikeButton extends React.Component {
+        // class는 기본적으로 constructor 있다
+        constructor(props) {
+          super(props);
+          // 컴포넌트는 state 상태 를 가지고 있다.
+          //      - 상태:  변하는 부분, 변할 여지가 있는 부분
+          this.state = {
+            liked: false,
+          };
+        }
+
+        //  .좋아요 버튼은 화면에 어떻게 표현할 것인가
+        render() {
+          return (
+            <button
+              type="submit"
+              onClick={() => {
+                this.setState({ liked: true });
+              }}
+            >
+              {this.state.liked ? "like" : "unlike"}
+            </button>
+          );
+          // JSX 문법  : javascript + xml(html이 아니라 xml!)
+          //  babel이 jsx문법을 아래와 같이 바꿔준다.
+
+          // -----------------------------------------정석대로 만들기 ---------------------------
+          // 태그 만들어주는 함수
+          // const e = React.createElement;
+
+          // 아래는 가독성이 떨어지기 때문에 위처럼 쓸 수 있도록 했다. ------------------
+          // e(
+          //   "button",
+          //   // html 속성(attributes)을 넣는 자리. 객체 형식으로 작성
+          //   {
+          //     type: "submit",
+          //     onClick: () => {
+          //       this.setState({ liked: !this.state.liked });
+          //       console.log(this.state.liked);
+          //     },
+          //   },
+          //   // content  부분, text
+          //   this.state.liked ? "Like " : "unliked"
+          // ); // => <button>Like</button> + 이벤트핸들러 태그를 만들겠다! (지금 여기서 만드는 게 아님)
+        }
+      }
+    </script>
+
+    <script type="text/babel">
+      // 컴포넌트로 만들어 놓은 애들을
+      // 웹에 실제로 Dom에 렌더링해준다.
+      ReactDOM.render(
+        <div>
+          <LikeButton />
+          <LikeButton />
+          <LikeButton />
+          <LikeButton />
+        </div>,
+        document.querySelector("#root")
+      ); // 첫번째 파라미터를 두번째 파라미터 하위에 붙이겠다.
+      // ReactDOM.render(e(LikeButton), document.querySelector("#root")); // 첫번째 파라미터를 두번째 파라미터 하위에 붙이겠다.
+    </script>
+  </body>
+</html>
