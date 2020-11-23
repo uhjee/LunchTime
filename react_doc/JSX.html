@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@17/umd/react.development.js"
+    ></script>
+
+    <!-- react-dom 실제 Dom에 렌더링해주는 js -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    ></script>
+
+    <!-- 바벨 -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const me = {
+        name: "heo jeehaneg",
+        age: 30,
+      };
+
+      const name = "heo jee haeng";
+
+      // 아래와 같이 표현하는 것을 JSX라 한다.
+      // javascript 에서 html 을 다루기 쉽게 하기 위함.
+      // 내부의  중괄호 안에서는 javascript 문법대로 작성이 가능하다
+      const element = <h1>Hello, {`${me.name}은 ${me.age}살 입니다`}</h1>;
+
+      //JSX도 표현식이기 때문에 출력을 해보면 Object로 출력이 된다.
+      console.log(typeof element);
+      console.log(element);
+
+      ReactDOM.render(element, document.getElementById("root"));
+    </script>
+  </body>
+</html>

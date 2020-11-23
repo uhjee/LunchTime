@@ -21,9 +21,23 @@
   <body>
     <div id="root"></div>
 
+    <!-- <script src="like-button.js"> -->
+    <!-- // webpack 은 이런 js 파일을 묶어서 읽어오는 것 -->
     <script type="text/babel">
-      // <script src="like-button.js">
-      // webpack 은 이런 js 파일을 묶어서 읽어오는 것
+      // react 에서의 Element :
+      // Component를 구성하는 일부
+      // JSX 문법  : javascript + xml(html이 아니라 xml!)
+      //  babel이 jsx문법을 아래와 같이 바꿔준다.
+      // const element = (
+      //   <button
+      //     type="submit"
+      //     onClick={() => {
+      //       this.setState({ liked: true });
+      //     }}
+      //   >
+      //     {this.state.liked ? "like" : "unlike"}
+      //   </button>
+      // );
 
       // class 하나가 component 하나라고 생각하자
       class LikeButton extends React.Component {
@@ -49,8 +63,6 @@
               {this.state.liked ? "like" : "unlike"}
             </button>
           );
-          // JSX 문법  : javascript + xml(html이 아니라 xml!)
-          //  babel이 jsx문법을 아래와 같이 바꿔준다.
 
           // -----------------------------------------정석대로 만들기 ---------------------------
           // 태그 만들어주는 함수
