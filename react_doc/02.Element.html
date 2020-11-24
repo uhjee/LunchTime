@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@17/umd/react.development.js"
+    ></script>
+
+    <!-- react-dom 실제 Dom에 렌더링해주는 js -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    ></script>
+
+    <!-- 바벨 -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+
+  <body>
+    <!-- root Node -->
+    <div id="root"></div>
+
+    <script type="text/babel">
+      // element 선언 및 생성
+      // react element 객체는 불변 객체
+      const element = <h1>hello</h1>;
+
+      ReactDOM.render(element, document.getElementById("root"));
+
+      // 예제 2  --- 시계
+      function tick() {
+        const element = (
+          <div>
+            <h1>hello, world</h1>
+            <h2>Is is {new Date().toLocaleTimeString()}!</h2>
+          </div>
+        );
+
+        ReactDOM.render(element, document.getElementById("root"));
+      }
+
+      // 계속해서 ReactDOM.render()를 호출하지만,
+      // 개발자 도구로 확인해보면 전체가 아닌 실제 변하고 있는 값만 업데이트되고 있다.
+      setInterval(tick, 500);
+    </script>
+  </body>
+</html>

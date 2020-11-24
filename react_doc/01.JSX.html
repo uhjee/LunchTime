@@ -32,6 +32,8 @@
       // 내부의  중괄호 안에서는 javascript 문법대로 작성이 가능하다
       const element = <h1>Hello, {`${me.name}은 ${me.age}살 입니다`}</h1>;
 
+      // Babel은 JSX 를 React.createElement() 호출로 컴파일한다.
+
       //JSX도 표현식이기 때문에 출력을 해보면 Object로 출력이 된다.
       console.log(typeof element);
       console.log(element);
