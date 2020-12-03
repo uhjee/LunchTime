@@ -21,7 +21,10 @@
           console.log("준비됐고, 시작합니다!");
         },
         tools: {
-          image: SimpleImage,
+          image: {
+            class: SimpleImage,
+            inlineToolbar: true,
+          },
         },
 
         data: {
@@ -32,6 +35,10 @@
               data: {
                 url:
                   "https://cdn.pixabay.com/photo/2017/09/01/21/53/blue-2705642_1280.jpg",
+                caption: "즐거운 선글라스",
+                withBorder: false,
+                withBackground: false,
+                stretched: true,
               },
             },
           ],
