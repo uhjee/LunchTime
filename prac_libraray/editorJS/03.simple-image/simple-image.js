@@ -9,9 +9,35 @@ class SimpleImage {
     };
   }
 
+  // paste 에 대한 설정
+  static get pasteConfig() {
+    return {
+      tags: ["IMG"],
+      // file 복사 붙여넣기, file 드래그앤드롭
+      files: {
+        mimeTypes: ["image/*"],
+        extensions: ["gif", "jpg", "png"],
+      },
+      // url 정규표현식으로 판단해서 이미지면 바로 image block으로 생성
+      patterns: {
+        image: /https?:\/\/\S+\.(gif|jpe?g|tiff|png)$/i,
+      },
+    };
+  }
+
+  // Automatic sanitize config
+  static get sanitize() {
+    return {
+      url: false, // disaloow HTML
+      caption: {}, // only tags from Inline Toolbar
+    };
+  }
+
   // ------------------------- consturctor ------------------------------
   // 이전의 데이터를 생성자의 파라미터에 'data'라는 객체를 갖고 rendering 된다.
-  constructor({ data }) {
+  constructor({ data, api, config }) {
+    this.api = api;
+    this.config = config || {};
     this.data = {
       url: data.url || "",
       caption: data.caption || "",
@@ -54,7 +80,9 @@ class SimpleImage {
       return this.wrapper;
     }
 
-    input.placeholder = "Paste an image URL...";
+    // input.placeholder = "Paste an image URL...";
+    input.placeholder =
+      this.config.placeholder || "Paste an image URL...(default)";
     input.value = this.data && this.data.url ? this.data.url : "";
 
     input.addEventListener("paste", (event) => {
@@ -70,7 +98,7 @@ class SimpleImage {
 
     image.src = url;
     caption.contentEditable = true;
-    caption.value = captionText || "";
+    caption.innerText = captionText || "";
 
     this.wrapper.innerHTML = "";
     this.wrapper.appendChild(image);
@@ -85,10 +113,20 @@ class SimpleImage {
     console.log(blockContent);
     const image = blockContent.querySelector("img");
     const caption = blockContent.querySelector("[contenteditable]");
+    // b, a, i 태그만 제외하고 모드 지워버린다.
+    // const sanitizerConfig = {
+    //   b: true,
+    //   a: {
+    //     href: true,
+    //   },
+    //   input: true,
+    // };
+
+    console.log(caption);
 
     return Object.assign(this.data, {
       url: image.src,
-      caption: caption.value,
+      caption: caption.innerHTML || "",
     });
   }
 
@@ -107,9 +145,14 @@ class SimpleImage {
     this.settings.forEach((tune) => {
       let button = document.createElement("div");
 
-      button.classList.add("cdx-settings-button");
+      // button.classList.add("cdx-settings-button");
+      // button.classList.toggle(
+      //   "cdx-settings-button--active",
+      //   this.data[tune.name]
+      // );
+      button.classList.add(this.api.styles.settingsButton);
       button.classList.toggle(
-        "cdx-settings-button--active",
+        this.api.styles.settingsButtonActive,
         this.data[tune.name]
       );
       button.innerHTML = tune.icon;
@@ -117,7 +160,8 @@ class SimpleImage {
 
       button.addEventListener("click", () => {
         this._toggleTune(tune.name);
-        button.classList.toggle("cdx-settings-button--active");
+        // button.classList.toggle("cdx-settings-button--active");
+        button.classList.toggle(this.api.styles.settingsButtonActive);
       });
     });
     return wrapper;
@@ -131,6 +175,41 @@ class SimpleImage {
   _acceptTuneView() {
     this.settings.forEach((tune) => {
       this.wrapper.classList.toggle(tune.name, !!this.data[tune.name]);
+      if (tune.name === "stretched") {
+        this.api.blocks.stretchBlock(
+          this.api.blocks.getCurrentBlockIndex(),
+          !!this.data.stretched
+        );
+      }
     });
+  }
+
+  // paste 이벤트에 대한 handling
+  onPaste(event) {
+    console.log(event);
+    switch (event.type) {
+      case "tag":
+        const imgTag = event.detail.data;
+
+        this._createImage(imgTag.src);
+        break;
+
+      case "file":
+        const file = event.detail.file;
+        const reader = new FileReader();
+
+        reader.onload = (loadEvent) => {
+          this._createImage(loadEvent.target.result);
+        };
+
+        reader.readAsDataURL(file);
+        break;
+
+      case "pattern":
+        const src = event.detail.data;
+
+        this._createImage(src);
+        break;
+    }
   }
 }
